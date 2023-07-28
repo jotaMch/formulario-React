@@ -7,6 +7,8 @@ class Form extends React.Component {
         this.state = {
             nome: {
                 value: "",
+                isError: false,
+                isValid: false
             },
             idade: {
                 value: "",
@@ -93,6 +95,10 @@ class Form extends React.Component {
                     <label>Nome:</label>
                     <input type="text" value={this.state.nome.value} name="nome" 
                     onChange={this.handleChange}/>
+                    {this.state.cpf.value.length === 0 &&
+                    <p>O nome é obrigatório</p>}
+                    {this.state.cpf.isError &&
+                    <p>O nome está incompleto</p>}
 
                     <label>Idade:</label>
                     <input type="number" value={this.state.idade.value} name="idade"
