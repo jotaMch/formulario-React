@@ -12,6 +12,9 @@ class Form extends React.Component {
             },
             idade: {
                 value: "",
+            },   
+            cpf: {
+                value: "cpf",
             },
             genero: {
                 value: "",
