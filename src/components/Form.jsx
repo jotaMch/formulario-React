@@ -1,4 +1,21 @@
 import React from "react";
+import styled from 'styled-components';
+
+
+const StyledSubmitButton = styled.button`
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  /* Adicione outros estilos desejados */
+`;
+
+const TextError = styled.p `
+    color: red;
+    font-size: 12px;
+    `;
 
 class Form extends React.Component {
     constructor(props) {
@@ -12,6 +29,8 @@ class Form extends React.Component {
             },
             idade: {
                 value: "",
+                isError: false,
+                isValid: false
             },   
             cpf: {
                 value: "cpf",
@@ -67,6 +86,20 @@ class Form extends React.Component {
             tipoDocumento: tipoDocumento.value,
         };
 
+        if (nome.value === "") {
+            this.setState({
+                nome: {
+                    ...nome,
+                    isError: true
+                },
+                idade: {
+                    ...idade,
+                    isError: true
+                }
+            });
+            return; 
+        }
+
         this.setState({ loadingVisible: true });
         setTimeout(() => {
             this.setState((prevState) => ({
@@ -89,7 +122,6 @@ class Form extends React.Component {
     };
     
     
-
     render() {
         return(
             <div className="main">
@@ -98,14 +130,16 @@ class Form extends React.Component {
                     <label>Nome:</label>
                     <input type="text" value={this.state.nome.value} name="nome" 
                     onChange={this.handleChange}/>
-                    {this.state.cpf.value.length === 0 &&
-                    <p>O nome é obrigatório</p>}
-                    {this.state.cpf.isError &&
-                    <p>O nome está incompleto</p>}
+                    {this.state.nome.isError &&
+                    <TextError>O nome é obrigatório</TextError>}
+                    {/* {this.state.nome.isError &&
+                    <TextError>O nome está incompleto</TextError>} */}
 
                     <label>Idade:</label>
                     <input type="number" value={this.state.idade.value} name="idade"
                     onChange={this.handleChange}/>
+                {this.state.idade.isError && <TextError>Este campo é requerido</TextError>}
+
 
                     <label>Genero:</label>   
                     
@@ -164,6 +198,8 @@ class Form extends React.Component {
 
                     </select>
 
+            
+
 
                     <div>
                         
@@ -181,7 +217,8 @@ class Form extends React.Component {
 
                     </div>
 
-                    <button type="submit">Enviar</button>
+                    <StyledSubmitButton type="submit">Enviar</StyledSubmitButton>
+
 
                 </form>
 
